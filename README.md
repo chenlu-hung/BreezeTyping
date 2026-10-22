@@ -1,4 +1,4 @@
-# VibeTyping
+# BreezeTyping
 
 macOS 語音輸入法，使用 [WhisperKit](https://github.com/argmaxinc/WhisperKit) 搭配 [Breeze-ASR-25](https://github.com/mtkresearch/Breeze-ASR-25) CoreML 模型在本地端進行台灣中文語音辨識，再以 FunASR 的 CT-Transformer 模型補上標點，並可選擇透過雲端 LLM 進一步校正同音錯字。
 
@@ -23,24 +23,24 @@ macOS 語音輸入法，使用 [WhisperKit](https://github.com/argmaxinc/Whisper
 
 ```bash
 # 1. Clone 專案
-git clone https://github.com/chenlu-hung/VibeTyping.git
-cd VibeTyping
+git clone https://github.com/chenlu-hung/BreezeTyping.git
+cd BreezeTyping
 
 # 2. 確認 xcode-select 指向 Xcode.app
 sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
 
 # 3. 解析 SPM 依賴
 xcodebuild -resolvePackageDependencies \
-  -project VibeTyping.xcodeproj \
-  -scheme VibeTyping
+  -project BreezeTyping.xcodeproj \
+  -scheme BreezeTyping
 
 # 4. 建置
-xcodebuild -project VibeTyping.xcodeproj \
-  -scheme VibeTyping \
+xcodebuild -project BreezeTyping.xcodeproj \
+  -scheme BreezeTyping \
   -configuration Release build
 
 # 5. 安裝到輸入法目錄
-cp -R ~/Library/Developer/Xcode/DerivedData/VibeTyping-*/Build/Products/Release/VibeTyping.app \
+cp -R ~/Library/Developer/Xcode/DerivedData/BreezeTyping-*/Build/Products/Release/BreezeTyping.app \
   ~/Library/Input\ Methods/
 
 # 6. 登出再登入（或重新啟動），讓系統載入新的輸入法
@@ -50,7 +50,7 @@ cp -R ~/Library/Developer/Xcode/DerivedData/VibeTyping-*/Build/Products/Release/
 
 1. 開啟 **系統設定** → **鍵盤** → **輸入來源** → **編輯**
 2. 點選 **+** 按鈕
-3. 找到 **VibeTyping** 並加入
+3. 找到 **BreezeTyping** 並加入
 
 ## 使用方式
 
@@ -69,14 +69,14 @@ cp -R ~/Library/Developer/Xcode/DerivedData/VibeTyping-*/Build/Products/Release/
 
 ## 設定
 
-在輸入法選單中選擇 **「VibeTyping 設定...」** 開啟設定視窗。
+在輸入法選單中選擇 **「BreezeTyping 設定...」** 開啟設定視窗。
 
 ### 語音辨識
 
 | 設定項 | 預設值 | 說明 |
 |--------|--------|------|
 | 靜音偵測秒數 | 1.5 秒 | 說話停頓多久後自動停止錄音 |
-| 自訂模型資料夾 | （空） | 留空則自動下載到 `~/Library/Application Support/VibeTyping/HubCache/` |
+| 自訂模型資料夾 | （空） | 留空則自動下載到 `~/Library/Application Support/BreezeTyping/HubCache/` |
 | 錄音快捷鍵 | `⌃/` (Ctrl+/) | 點擊按鈕後按下新的組合鍵即可變更 |
 
 ### 標點還原
@@ -84,7 +84,7 @@ cp -R ~/Library/Developer/Xcode/DerivedData/VibeTyping-*/Build/Products/Release/
 | 設定項 | 預設值 | 說明 |
 |--------|--------|------|
 | 啟用標點還原 | 開啟 | 關閉則輸出不含標點的原始辨識結果 |
-| 自訂模型檔案 | （空） | 留空則首次啟用時自動下載到 `~/Library/Application Support/VibeTyping/Punctuation/model.int8.onnx`（約 65 MB） |
+| 自訂模型檔案 | （空） | 留空則首次啟用時自動下載到 `~/Library/Application Support/BreezeTyping/Punctuation/model.int8.onnx`（約 65 MB） |
 
 模型為 [sherpa-onnx](https://github.com/k2-fsa/sherpa-onnx) 打包的 `punct-ct-transformer-zh-en-vocab272727` int8 版本，可插入 `，。？、`，繁體中文與中英夾雜均直接支援，不需簡繁轉換。
 
@@ -100,7 +100,7 @@ cp -R ~/Library/Developer/Xcode/DerivedData/VibeTyping-*/Build/Products/Release/
 ## 專案結構
 
 ```
-VibeTyping/
+BreezeTyping/
 ├── App/                 # 應用程式入口與 IMKServer 初始化
 ├── InputMethod/         # IMKInputController 核心控制器
 ├── Audio/               # AVAudioEngine 錄音與靜音偵測
@@ -128,8 +128,8 @@ VibeTyping/
 重新建置後需重新安裝並重啟輸入法程序：
 
 ```bash
-killall VibeTyping 2>/dev/null
-cp -R ~/Library/Developer/Xcode/DerivedData/VibeTyping-*/Build/Products/Debug/VibeTyping.app \
+killall BreezeTyping 2>/dev/null
+cp -R ~/Library/Developer/Xcode/DerivedData/BreezeTyping-*/Build/Products/Debug/BreezeTyping.app \
   ~/Library/Input\ Methods/
 ```
 

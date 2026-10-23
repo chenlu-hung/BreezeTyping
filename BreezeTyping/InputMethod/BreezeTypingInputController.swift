@@ -91,7 +91,12 @@ class BreezeTypingInputController: IMKInputController {
         showStatusPanel(state: .transcribing)
 
         Task {
-            // Step 1: Transcribe with WhisperKit
+            // Step 1: Transcribe with WhisperKit, first waiting out a model load still in progress
+            if await !WhisperKitManager.shared.isModelReady {
+                await MainActor.run { self.showStatusPanel(state: .loadingModel) }
+                try? await WhisperKitManager.shared.loadModel()
+                await MainActor.run { self.showStatusPanel(state: .transcribing) }
+            }
             let rawText = await WhisperKitManager.shared.transcribe(audioSamples: audioSamples)
             NSLog("BreezeTyping: Raw transcription: \(rawText)")
 

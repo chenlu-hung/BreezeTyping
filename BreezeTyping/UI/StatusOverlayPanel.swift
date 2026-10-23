@@ -2,6 +2,7 @@ import Cocoa
 
 enum RecordingState {
     case recording
+    case loadingModel
     case transcribing
     case correcting
 }
@@ -75,6 +76,10 @@ class StatusOverlayPanel: NSPanel {
             statusLabel.stringValue = "🎤 錄音中..."
             indicator.isHidden = true
             indicator.stopAnimation(nil)
+        case .loadingModel:
+            statusLabel.stringValue = "⏳ 模型載入中..."
+            indicator.isHidden = false
+            indicator.startAnimation(nil)
         case .transcribing:
             statusLabel.stringValue = "📝 辨識中..."
             indicator.isHidden = false

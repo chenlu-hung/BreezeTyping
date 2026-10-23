@@ -8,7 +8,7 @@ actor WhisperKitManager {
     static let shared = WhisperKitManager()
 
     private var whisperKit: WhisperKit?
-    private var isLoading = false
+    private var loadingTask: Task<WhisperKit, Error>?
     private(set) var isModelReady = false
 
     /// The actual folder path where model files reside (set after download or from custom folder).
@@ -69,10 +69,19 @@ actor WhisperKitManager {
     }
 
     /// Load the WhisperKit model from a specific folder path.
+    ///
+    /// If a load is already in flight (typically the one started at launch), this joins it
+    /// instead of returning early. The first load under a new bundle identifier has to
+    /// recompile the model for the Neural Engine, which can take many minutes, and a
+    /// dictation made during that time should wait for it rather than come back empty.
     func loadModel(from folder: URL? = nil) async throws {
-        guard whisperKit == nil, !isLoading else { return }
-        isLoading = true
-        defer { isLoading = false }
+        guard whisperKit == nil else { return }
+
+        if let loadingTask = loadingTask {
+            whisperKit = try await loadingTask.value
+            isModelReady = true
+            return
+        }
 
         NSLog("BreezeTyping: Loading WhisperKit model...")
 
@@ -111,7 +120,11 @@ actor WhisperKitManager {
             download: false
         )
 
-        whisperKit = try await WhisperKit(config)
+        let task = Task { try await WhisperKit(config) }
+        loadingTask = task
+        defer { loadingTask = nil }
+
+        whisperKit = try await task.value
         isModelReady = true
         NSLog("BreezeTyping: WhisperKit model loaded successfully")
     }

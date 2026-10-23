@@ -1,9 +1,9 @@
-name: VibeTyping
+name: BreezeTyping
 options:
   deploymentTarget:
     macOS: "14.0"
   xcodeVersion: "15.0"
-  bundleIdPrefix: com.vibetyping
+  bundleIdPrefix: com.breezetyping
 
 packages:
   WhisperKit:
@@ -14,41 +14,41 @@ packages:
     minorVersion: "1.13.7"
 
 targets:
-  VibeTyping:
+  BreezeTyping:
     type: application
     platform: macOS
     sources:
-      - path: VibeTyping
+      - path: BreezeTyping
         excludes:
           - "Resources/Info.plist"
     info:
-      path: VibeTyping/Resources/Info.plist
+      path: BreezeTyping/Resources/Info.plist
       properties:
         NSPrincipalClass: $(PRODUCT_MODULE_NAME).NSManualApplication
         InputMethodConnectionName: $(PRODUCT_BUNDLE_IDENTIFIER)_Connection
-        InputMethodServerControllerClass: $(PRODUCT_MODULE_NAME).VibeTypingInputController
+        InputMethodServerControllerClass: $(PRODUCT_MODULE_NAME).BreezeTypingInputController
         LSBackgroundOnly: true
         tsInputMethodCharacterRepertoireKey:
           - Hant
           - Hans
           - Latn
         tsInputMethodIconFileKey: main.tiff
-        NSMicrophoneUsageDescription: "VibeTyping 需要麥克風權限來進行語音輸入。"
+        NSMicrophoneUsageDescription: "BreezeTyping 需要麥克風權限來進行語音輸入。"
         LSMinimumSystemVersion: "14.0"
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.vibetyping.inputmethod.VibeTyping
-        PRODUCT_NAME: VibeTyping
+        PRODUCT_BUNDLE_IDENTIFIER: com.breezetyping.inputmethod.BreezeTyping
+        PRODUCT_NAME: BreezeTyping
         SWIFT_VERSION: "5.9"
         MACOSX_DEPLOYMENT_TARGET: "14.0"
-        CODE_SIGN_ENTITLEMENTS: VibeTyping/Resources/VibeTyping.entitlements
-        INFOPLIST_FILE: VibeTyping/Resources/Info.plist
+        CODE_SIGN_ENTITLEMENTS: BreezeTyping/Resources/BreezeTyping.entitlements
+        INFOPLIST_FILE: BreezeTyping/Resources/Info.plist
     dependencies:
       - package: WhisperKit
       - package: sherpa-onnx
         product: sherpa-onnx
     entitlements:
-      path: VibeTyping/Resources/VibeTyping.entitlements
+      path: BreezeTyping/Resources/BreezeTyping.entitlements
       properties:
         com.apple.security.app-sandbox: false
         com.apple.security.device.audio-input: true

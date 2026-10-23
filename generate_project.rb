@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# Generate VibeTyping.xcodeproj manually
+# Generate BreezeTyping.xcodeproj manually
 # Run: ruby generate_project.rb
 
 require 'fileutils'
@@ -10,11 +10,11 @@ def xcode_uuid
   SecureRandom.hex(12).upcase
 end
 
-proj_dir = File.join(__dir__, 'VibeTyping.xcodeproj')
+proj_dir = File.join(__dir__, 'BreezeTyping.xcodeproj')
 FileUtils.mkdir_p(proj_dir)
 
 # Collect all Swift source files
-source_dir = File.join(__dir__, 'VibeTyping')
+source_dir = File.join(__dir__, 'BreezeTyping')
 swift_files = Dir.glob(File.join(source_dir, '**', '*.swift')).sort
 
 # Assign UUIDs to each file
@@ -30,10 +30,10 @@ swift_files.each do |path|
 end
 
 # Additional resource files
-info_plist_path = 'VibeTyping/Resources/Info.plist'
+info_plist_path = 'BreezeTyping/Resources/Info.plist'
 info_plist_ref = xcode_uuid
 
-entitlements_path = 'VibeTyping/Resources/VibeTyping.entitlements'
+entitlements_path = 'BreezeTyping/Resources/BreezeTyping.entitlements'
 entitlements_ref = xcode_uuid
 
 # Group UUIDs
@@ -47,7 +47,7 @@ llm_group_id = xcode_uuid
 ui_group_id = xcode_uuid
 settings_group_id = xcode_uuid
 resources_group_id = xcode_uuid
-vibetyping_group_id = xcode_uuid
+breezetyping_group_id = xcode_uuid
 frameworks_group_id = xcode_uuid
 products_group_id = xcode_uuid
 
@@ -152,10 +152,10 @@ end
 
 # Info.plist and entitlements
 pbx += "\t\t#{info_plist_ref} /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = \"Info.plist\"; sourceTree = \"<group>\"; };\n"
-pbx += "\t\t#{entitlements_ref} /* VibeTyping.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = \"VibeTyping.entitlements\"; sourceTree = \"<group>\"; };\n"
+pbx += "\t\t#{entitlements_ref} /* BreezeTyping.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = \"BreezeTyping.entitlements\"; sourceTree = \"<group>\"; };\n"
 
 # Product reference
-pbx += "\t\t#{product_ref_id} /* VibeTyping.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VibeTyping.app; sourceTree = BUILT_PRODUCTS_DIR; };\n"
+pbx += "\t\t#{product_ref_id} /* BreezeTyping.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BreezeTyping.app; sourceTree = BUILT_PRODUCTS_DIR; };\n"
 
 # Framework references
 pbx += "\t\t#{imk_framework_ref} /* InputMethodKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = InputMethodKit.framework; path = System/Library/Frameworks/InputMethodKit.framework; sourceTree = SDKROOT; };\n"
@@ -184,7 +184,7 @@ pbx += <<~PBX
 		#{root_group_id} = {
 			isa = PBXGroup;
 			children = (
-				#{vibetyping_group_id} /* VibeTyping */,
+				#{breezetyping_group_id} /* BreezeTyping */,
 				#{frameworks_group_id} /* Frameworks */,
 				#{products_group_id} /* Products */,
 			);
@@ -193,7 +193,7 @@ pbx += <<~PBX
 		#{products_group_id} /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				#{product_ref_id} /* VibeTyping.app */,
+				#{product_ref_id} /* BreezeTyping.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -208,7 +208,7 @@ pbx += <<~PBX
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		#{vibetyping_group_id} /* VibeTyping */ = {
+		#{breezetyping_group_id} /* BreezeTyping */ = {
 			isa = PBXGroup;
 			children = (
 				#{app_group_id} /* App */,
@@ -221,7 +221,7 @@ pbx += <<~PBX
 				#{settings_group_id} /* Settings */,
 				#{resources_group_id} /* Resources */,
 			);
-			path = VibeTyping;
+			path = BreezeTyping;
 			sourceTree = "<group>";
 		};
 PBX
@@ -247,7 +247,7 @@ pbx += <<~PBX
 			isa = PBXGroup;
 			children = (
 				#{info_plist_ref} /* Info.plist */,
-				#{entitlements_ref} /* VibeTyping.entitlements */,
+				#{entitlements_ref} /* BreezeTyping.entitlements */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -255,9 +255,9 @@ pbx += <<~PBX
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		#{target_id} /* VibeTyping */ = {
+		#{target_id} /* BreezeTyping */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = #{target_config_list_id} /* Build configuration list for PBXNativeTarget "VibeTyping" */;
+			buildConfigurationList = #{target_config_list_id} /* Build configuration list for PBXNativeTarget "BreezeTyping" */;
 			buildPhases = (
 				#{sources_phase_id} /* Sources */,
 				#{frameworks_phase_id} /* Frameworks */,
@@ -267,13 +267,13 @@ pbx += <<~PBX
 			);
 			dependencies = (
 			);
-			name = VibeTyping;
+			name = BreezeTyping;
 			packageProductDependencies = (
 				#{package_product_ref_id} /* WhisperKit */,
 				#{sherpa_product_ref_id} /* sherpa-onnx */,
 			);
-			productName = VibeTyping;
-			productReference = #{product_ref_id} /* VibeTyping.app */;
+			productName = BreezeTyping;
+			productReference = #{product_ref_id} /* BreezeTyping.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -286,7 +286,7 @@ pbx += <<~PBX
 				LastSwiftUpdateCheck = 1540;
 				LastUpgradeCheck = 1540;
 			};
-			buildConfigurationList = #{project_config_list_id} /* Build configuration list for PBXProject "VibeTyping" */;
+			buildConfigurationList = #{project_config_list_id} /* Build configuration list for PBXProject "BreezeTyping" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = "zh-Hant";
 			hasScannedForEncodings = 0;
@@ -304,7 +304,7 @@ pbx += <<~PBX
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				#{target_id} /* VibeTyping */,
+				#{target_id} /* BreezeTyping */,
 			);
 		};
 /* End PBXProject section */
@@ -386,14 +386,14 @@ pbx += <<~PBX
 		#{debug_config_id} /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = VibeTyping/Resources/VibeTyping.entitlements;
+				CODE_SIGN_ENTITLEMENTS = BreezeTyping/Resources/BreezeTyping.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = VibeTyping/Resources/Info.plist;
+				INFOPLIST_FILE = BreezeTyping/Resources/Info.plist;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.vibetyping.inputmethod.VibeTyping;
+				PRODUCT_BUNDLE_IDENTIFIER = com.breezetyping.inputmethod.BreezeTyping;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -403,14 +403,14 @@ pbx += <<~PBX
 		#{release_config_id} /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = VibeTyping/Resources/VibeTyping.entitlements;
+				CODE_SIGN_ENTITLEMENTS = BreezeTyping/Resources/BreezeTyping.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = VibeTyping/Resources/Info.plist;
+				INFOPLIST_FILE = BreezeTyping/Resources/Info.plist;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.vibetyping.inputmethod.VibeTyping;
+				PRODUCT_BUNDLE_IDENTIFIER = com.breezetyping.inputmethod.BreezeTyping;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -420,7 +420,7 @@ pbx += <<~PBX
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		#{project_config_list_id} /* Build configuration list for PBXProject "VibeTyping" */ = {
+		#{project_config_list_id} /* Build configuration list for PBXProject "BreezeTyping" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				#{project_debug_config_id} /* Debug */,
@@ -429,7 +429,7 @@ pbx += <<~PBX
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		#{target_config_list_id} /* Build configuration list for PBXNativeTarget "VibeTyping" */ = {
+		#{target_config_list_id} /* Build configuration list for PBXNativeTarget "BreezeTyping" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				#{debug_config_id} /* Debug */,
@@ -502,9 +502,9 @@ scheme = <<~SCHEME
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "#{target_id}"
-               BuildableName = "VibeTyping.app"
-               BlueprintName = "VibeTyping"
-               ReferencedContainer = "container:VibeTyping.xcodeproj">
+               BuildableName = "BreezeTyping.app"
+               BlueprintName = "BreezeTyping"
+               ReferencedContainer = "container:BreezeTyping.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -530,9 +530,9 @@ scheme = <<~SCHEME
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "#{target_id}"
-            BuildableName = "VibeTyping.app"
-            BlueprintName = "VibeTyping"
-            ReferencedContainer = "container:VibeTyping.xcodeproj">
+            BuildableName = "BreezeTyping.app"
+            BlueprintName = "BreezeTyping"
+            ReferencedContainer = "container:BreezeTyping.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -547,9 +547,9 @@ scheme = <<~SCHEME
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "#{target_id}"
-            BuildableName = "VibeTyping.app"
-            BlueprintName = "VibeTyping"
-            ReferencedContainer = "container:VibeTyping.xcodeproj">
+            BuildableName = "BreezeTyping.app"
+            BlueprintName = "BreezeTyping"
+            ReferencedContainer = "container:BreezeTyping.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
@@ -560,8 +560,8 @@ scheme = <<~SCHEME
 </Scheme>
 SCHEME
 
-File.write(File.join(schemes_dir, 'VibeTyping.xcscheme'), scheme)
+File.write(File.join(schemes_dir, 'BreezeTyping.xcscheme'), scheme)
 
-puts "✅ Generated VibeTyping.xcodeproj successfully!"
+puts "✅ Generated BreezeTyping.xcodeproj successfully!"
 puts "   Source files: #{swift_files.length}"
-puts "   Open with: open VibeTyping.xcodeproj"
+puts "   Open with: open BreezeTyping.xcodeproj"
